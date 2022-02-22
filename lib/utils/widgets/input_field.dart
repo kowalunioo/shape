@@ -10,7 +10,6 @@ class InputField extends StatefulWidget {
   final bool isError;
   final TextEditingController controller;
   final VoidCallback onTextChanged;
-  final TextInputAction textInputAction;
   final TextInputType? keyboardType;
   
   const InputField({ 
@@ -22,7 +21,6 @@ class InputField extends StatefulWidget {
     this.isError = false, 
     required this.controller, 
     required this.onTextChanged, 
-    this.textInputAction = TextInputAction.done, 
     this.keyboardType 
   }) : super(key: key);
 

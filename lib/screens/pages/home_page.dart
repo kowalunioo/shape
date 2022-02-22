@@ -1,3 +1,4 @@
+import 'package:enloquenutrition/utils/authentication_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:enloquenutrition/utils/utilities.dart';
@@ -86,6 +87,7 @@ class DateBox extends StatelessWidget {
         [
           Text("Day", style: dateBoxDayTextStyle),
           Text("1", style: dateBoxNumberTextStyle,),
+          ElevatedButton(onPressed: (){context.read<AuthenticationProvider>().signOut();},child: null,)
         ],
       ),
     );

@@ -27,6 +27,10 @@ class _SignUpWithEmailScreenState extends State<SignUpWithEmailScreen> {
     final logoWidth = availableWidth - 150;
     final logoHeight = availableWidth/4.17;
 
+    final isUsernameError;
+    final isEmailError;
+    final isPasswordError;
+
     final emailSignUpButton = ElevatedButton.icon(
       onPressed: () 
       {
@@ -106,11 +110,29 @@ class _SignUpWithEmailScreenState extends State<SignUpWithEmailScreen> {
                         [
                           const Text('Sign up to get started!', style: TextStyle(color: Colors.white, fontFamily: 'Poppins')),
                           Space(10),
-                          InputField(),
+                          InputField
+                          (
+                            title: 'Name', 
+                            placeHolder: 'John', 
+                            errorText: 'Your name is not correct!', 
+                            controller: nameTextFieldController,
+                          ),
                           Space(10),
-                          inputField(context, 'Email', emailTextFieldController, false),
+                          InputField
+                          (
+                            title: 'Email', 
+                            placeHolder: 'example@mail.com', 
+                            errorText: 'This mail is not correct!', 
+                            controller: emailTextFieldController,
+                          ),
                           Space(10),
-                          inputField(context, 'Password', passwordTextFieldController, true),
+                          InputField
+                          (
+                            title: 'Password', 
+                            placeHolder: 'Password', 
+                            errorText: 'This password is not correct!', 
+                            controller: passwordTextFieldController,
+                          ),
                           Space(10),
                           emailSignUpButton,
                         ]
