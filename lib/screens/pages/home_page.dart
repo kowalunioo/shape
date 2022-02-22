@@ -22,7 +22,8 @@ class _HomePageState extends State<HomePage> {
       children:
       [
         buildHeader(user!.displayName!),
-        DatesBar(25)
+        DatesBar(25),
+        ElevatedButton(onPressed: (){context.read<AuthenticationProvider>().signOut();},child: Text('sign out'),)
       ]
     );
   }
@@ -87,7 +88,6 @@ class DateBox extends StatelessWidget {
         [
           Text("Day", style: dateBoxDayTextStyle),
           Text("1", style: dateBoxNumberTextStyle,),
-          ElevatedButton(onPressed: (){context.read<AuthenticationProvider>().signOut();},child: null,)
         ],
       ),
     );

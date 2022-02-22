@@ -9,9 +9,10 @@ class InputField extends StatefulWidget {
   final bool obescureText;
   final bool isError;
   final TextEditingController controller;
-  final VoidCallback onTextChanged;
   final TextInputType? keyboardType;
-  
+  final double width;
+  final double height;
+
   const InputField({ 
     Key? key,
     required this.title, 
@@ -20,8 +21,9 @@ class InputField extends StatefulWidget {
     this.obescureText = false, 
     this.isError = false, 
     required this.controller, 
-    required this.onTextChanged, 
-    this.keyboardType 
+    this.keyboardType,
+    required this.width,
+    this.height = 50,
   }) : super(key: key);
 
   @override
@@ -63,21 +65,15 @@ class _InputStateField extends State<InputField> {
 
   @override
   Widget build(BuildContext context) {
-    return Container
+    return Column
     (
-      width: double.infinity,
-      height: 50,
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Column
-      (
-        children:
-        [
-          //CreateHeader
-          Space(5),
-          createTextField(),
-          if(stateIsError) ...[/*create error*/]
-        ]
-      )
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children:
+      [
+        createTitle(),
+        createTextField(),
+        if(stateIsError) ...[createError()]
+      ]
     );
   }
 
@@ -97,7 +93,7 @@ class _InputStateField extends State<InputField> {
   Color getTitleColor()
   {
     if(focusNode.hasFocus)
-      return primaryColor;
+      return accentColor;
     else if (stateIsError)
       return errorColor;
 
@@ -135,32 +131,40 @@ class _InputStateField extends State<InputField> {
           stateObsecureText = !stateObsecureText;  
         });
       },
-      child: Icon(CupertinoIcons.eye_fill, color: widget.controller.text.isNotEmpty ? primaryColor : notActiveColor,),
+      child: Icon(CupertinoIcons.eye_fill, color: widget.controller.text.isNotEmpty ? primaryColor : notActiveColor),
     );
   }
 
   Widget createTextField() 
   {
-    return TextFormField
+    return SizedBox
     (
-      controller: widget.controller,
-      obscureText: stateObsecureText,
-      style: const TextStyle(color: Colors.white),
-      decoration: InputDecoration
-      (
-        hintText: widget.placeHolder,
-        hintStyle: TextStyle(color: Colors.white.withOpacity(0.7),),
-        focusedBorder: OutlineInputBorder
+      width: widget.width,
+      height: widget.height,
+      child:
+        TextFormField
         (
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Color(0xFF7289DA))
+          controller: widget.controller,
+          focusNode: focusNode,
+          obscureText: stateObsecureText,
+          style: const TextStyle(color: Colors.white),
+          decoration: InputDecoration
+          (
+            hintText: widget.placeHolder,
+            hintStyle: TextStyle(color: Colors.white.withOpacity(0.7)),
+            isDense: true,
+            focusedBorder: OutlineInputBorder
+            (
+              borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(color: Color(0xFF7289DA))
+            ),
+            enabledBorder: OutlineInputBorder
+            (
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: stateIsError ? errorColor : Colors.white.withOpacity(0.7))
+            ),
+          ),
         ),
-        enabledBorder: OutlineInputBorder
-        (
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: stateIsError ? errorColor : Colors.white.withOpacity(0.7))
-        ),
-      ),
     );
   }
 

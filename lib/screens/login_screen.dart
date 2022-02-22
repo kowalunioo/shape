@@ -1,5 +1,6 @@
 import 'package:enloquenutrition/screens/home_screen.dart';
 import 'package:enloquenutrition/utils/authentication_provider.dart';
+import 'package:enloquenutrition/utils/widgets/input_field.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -20,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) 
   {
-    final availableWidth = MediaQuery.of(context).size.width;
+    final availableWidth = MediaQuery.of(context).size.width - (padding * 2);
     final availableHeight = MediaQuery.of(context).size.height - AppBar().preferredSize.height - MediaQuery.of(context).padding.top - MediaQuery.of(context).padding.bottom - backIconSize - MediaQuery.of(context).viewInsets.bottom-(padding*2);
     
     final logoWidth = availableWidth - 150;
@@ -104,9 +105,23 @@ class _LoginPageState extends State<LoginPage> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children:
                         [
-                          inputField(context, 'Email', emailTextFieldController, false),
+                          InputField
+                          (
+                            title: 'Email', 
+                            placeHolder: 'example@mail.com', 
+                            errorText: 'There is no such email singed up in enloque nutrition!', 
+                            controller: passwordTextFieldController,
+                            width: availableWidth,
+                          ),
                           Space(10),
-                          inputField(context, 'Password', passwordTextFieldController, true),
+                          InputField
+                          (
+                            title: 'Password', 
+                            placeHolder: 'Password', 
+                            errorText: 'This password is not correct!', 
+                            controller: passwordTextFieldController,
+                            width: availableWidth,
+                          ),
                           Space(10),
                           emailSignInButton,
                           Space(10),

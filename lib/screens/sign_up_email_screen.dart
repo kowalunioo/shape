@@ -21,36 +21,15 @@ class _SignUpWithEmailScreenState extends State<SignUpWithEmailScreen> {
   @override
   Widget build(BuildContext context) 
   {
-    final availableWidth = MediaQuery.of(context).size.width;
+    final availableWidth = MediaQuery.of(context).size.width - (padding * 2);
     final availableHeight = MediaQuery.of(context).size.height - AppBar().preferredSize.height - MediaQuery.of(context).padding.top - MediaQuery.of(context).padding.bottom - backIconSize - MediaQuery.of(context).viewInsets.bottom;
     
-    final logoWidth = availableWidth - 150;
-    final logoHeight = availableWidth/4.17;
+    final logoWidth = availableWidth-150;
+    final logoHeight = (availableWidth-150)/4.17;
 
     final isUsernameError;
     final isEmailError;
     final isPasswordError;
-
-    final emailSignUpButton = ElevatedButton.icon(
-      onPressed: () 
-      {
-        try
-        {
-          context.read<AuthenticationProvider>().registerWithNameEmailAndPassword(nameTextFieldController.text, emailTextFieldController.text, passwordTextFieldController.text);  
-        } catch(e) {
-          print(e);
-        }
-      }, 
-      icon: const FaIcon(FontAwesomeIcons.signInAlt, color: Colors.white),
-      label: const Text('Sign Up'), 
-      style: ButtonStyle
-      (
-        minimumSize: MaterialStateProperty.all(Size(availableWidth - (padding * 2), 50)),
-        shape: MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
-        backgroundColor: MaterialStateProperty.all(const Color(0xFF7289DA)),
-        textStyle: MaterialStateProperty.all(const TextStyle(color: Colors.white, fontFamily: 'Poppins', fontWeight: FontWeight.w700))
-      )
-    );
 
     return SafeArea
     (
@@ -71,80 +50,97 @@ class _SignUpWithEmailScreenState extends State<SignUpWithEmailScreen> {
           child: Padding
           (
             padding: const EdgeInsets.all(padding),
-            child: Column
+            child: SizedBox
             (
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: 
-              [
-                Row
-                (
-                  children: [GoBackIcon(context)],
-                ),
-                Row
-                (
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children:
-                  [
-                    SizedBox
-                    (
-                      height: availableHeight/2,
-                      child: Column
-                      (
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [Logo(logoWidth, logoHeight)],
-                      )
-                    )
-                  ]
-                ),
-                Row
-                (
-                  children: 
-                  [
-                    SizedBox
-                    (
-                      height: availableHeight/2,
-                      child: Column
-                      (
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children:
-                        [
-                          const Text('Sign up to get started!', style: TextStyle(color: Colors.white, fontFamily: 'Poppins')),
-                          Space(10),
-                          InputField
-                          (
-                            title: 'Name', 
-                            placeHolder: 'John', 
-                            errorText: 'Your name is not correct!', 
-                            controller: nameTextFieldController,
-                          ),
-                          Space(10),
-                          InputField
-                          (
-                            title: 'Email', 
-                            placeHolder: 'example@mail.com', 
-                            errorText: 'This mail is not correct!', 
-                            controller: emailTextFieldController,
-                          ),
-                          Space(10),
-                          InputField
-                          (
-                            title: 'Password', 
-                            placeHolder: 'Password', 
-                            errorText: 'This password is not correct!', 
-                            controller: passwordTextFieldController,
-                          ),
-                          Space(10),
-                          emailSignUpButton,
-                        ]
-                      ),
-                    )
-                  ],
-                )
-              ],
+              height: availableHeight,
+              child: Column
+              (
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: 
+                [
+                  buildHeader(logoWidth, logoHeight),
+                  buildBody(availableWidth)
+                ],
+              ),
             ),
           ),
         )
       )
+    );
+  }
+
+  Widget buildHeader(double width, double height)
+  {
+    return Column
+    (
+      //crossAxisAlignment: CrossAxisAlignment.center,
+      children: 
+      [
+        Row
+        (
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [GoBackIcon(context)],
+        ),
+        Logo(width, height),
+      ],
+    );
+  }
+
+  Widget buildBody(double width)
+  {
+    final emailSignUpButton = ElevatedButton.icon(
+      onPressed: () 
+      {
+        try
+        {
+          context.read<AuthenticationProvider>().registerWithNameEmailAndPassword(nameTextFieldController.text, emailTextFieldController.text, passwordTextFieldController.text);  
+        } catch(e) {
+          print(e);
+        }
+      }, 
+      icon: const FaIcon(FontAwesomeIcons.signInAlt, color: Colors.white),
+      label: const Text('Sign Up'), 
+      style: ButtonStyle
+      (
+        minimumSize: MaterialStateProperty.all(Size(width, 50)),
+        shape: MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
+        backgroundColor: MaterialStateProperty.all(const Color(0xFF7289DA)),
+        textStyle: MaterialStateProperty.all(const TextStyle(color: Colors.white, fontFamily: 'Poppins', fontWeight: FontWeight.w700))
+      )
+    );
+
+    return Column
+    (
+      mainAxisAlignment: MainAxisAlignment.center,
+      children:
+      [
+        InputField
+        (
+          title: 'Name', 
+          placeHolder: 'John', 
+          errorText: 'Your name is not correct!', 
+          controller: nameTextFieldController,
+          width: width,
+        ),
+        InputField
+        (
+          title: 'Email', 
+          placeHolder: 'example@mail.com', 
+          errorText: 'This mail is not correct!', 
+          controller: emailTextFieldController,
+          width: width,
+        ),
+        InputField
+        (
+          title: 'Password', 
+          placeHolder: 'Password', 
+          errorText: 'This password is not correct!', 
+          controller: passwordTextFieldController,
+          width: width,
+        ),
+        Space(10),
+        emailSignUpButton,
+      ]
     );
   }
 }

@@ -70,8 +70,12 @@ Widget Logo(double width, double height)
 {
   return Container
   (
+    margin: EdgeInsets.zero,
+    padding: EdgeInsets.zero,
+    constraints: const BoxConstraints(),
     height: height,
     width: width,
+    //decoration: const BoxDecoration(color: Colors.white)
     decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/images/enloquenutrition_logo.png'), fit: BoxFit.contain))
   );
 }
