@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "925878355057",
+    "project_id": "enloque-nutrition",
+    "storage_bucket": "enloque-nutrition.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:925878355057:android:a27a296cc55e553bb507d0",
+        "android_client_info": {
+          "package_name": "com.example.enloquenutrition"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "925878355057-ojehk310t7ru0oe62p2pl1ep014bug5s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrZPAuTsVJrZvSnvoHqCeVQu0mH_oHOe4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "925878355057-ojehk310t7ru0oe62p2pl1ep014bug5s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
