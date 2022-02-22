@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+const double _opacityValue = 0.7;
+
 const Color backgroundColor = Color(0xFF151515);
 const Color primaryColor = Color(0xFFFFFFFF);
 const Color accentColor = Color(0xFF7289DA);
 const Color errorColor = Color(0xFFDF2935);
+const Color notActiveColor = Color(0xB3FFFFFF);
 
 const double padding = 25; 
 const double backIconSize = 25;

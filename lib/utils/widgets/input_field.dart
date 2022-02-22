@@ -1,4 +1,5 @@
 import 'package:enloquenutrition/utils/utilities.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class InputField extends StatefulWidget {
@@ -69,7 +70,74 @@ class _InputStateField extends State<InputField> {
       width: double.infinity,
       height: 50,
       padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: createTextField()
+      child: Column
+      (
+        children:
+        [
+          //CreateHeader
+          Space(5),
+          createTextField(),
+          if(stateIsError) ...[/*create error*/]
+        ]
+      )
+    );
+  }
+
+  Widget createTitle()
+  {
+    return Text
+    (
+      widget.title,
+      style: TextStyle
+      (
+        color: getTitleColor(),
+        fontWeight: FontWeight.w400
+      ),
+    );
+  }
+
+  Color getTitleColor()
+  {
+    if(focusNode.hasFocus)
+      return primaryColor;
+    else if (stateIsError)
+      return errorColor;
+
+    return notActiveColor;
+  }
+
+  Widget createTextFieldStack()
+  {
+    return Stack
+    (
+      children: 
+      [
+        createTextField(),
+        if(widget.obescureText) ...[
+          Positioned
+          (
+            top: 0,
+            bottom: 0,
+            right: 0,
+            child: createShowEye()
+          )
+        ]
+      ],
+    );
+  }
+
+  Widget createShowEye()
+  {
+    return GestureDetector
+    (
+      onTap: ()
+      {
+        setState(() 
+        {
+          stateObsecureText = !stateObsecureText;  
+        });
+      },
+      child: Icon(CupertinoIcons.eye_fill, color: widget.controller.text.isNotEmpty ? primaryColor : notActiveColor,),
     );
   }
 
@@ -95,6 +163,15 @@ class _InputStateField extends State<InputField> {
           borderSide: BorderSide(color: stateIsError ? errorColor : Colors.white.withOpacity(0.7))
         ),
       ),
+    );
+  }
+
+  Widget createError()
+  {
+    return Container
+    (
+      padding: const EdgeInsets.only(top: 2),
+      child: Text(widget.errorText, style: const TextStyle(color: errorColor)),
     );
   }
 }
