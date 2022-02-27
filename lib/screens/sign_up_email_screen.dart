@@ -1,4 +1,5 @@
 import 'package:enloquenutrition/utils/authentication_provider.dart';
+import 'package:enloquenutrition/utils/validation_service.dart';
 import 'package:enloquenutrition/utils/widgets/input_field.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -18,18 +19,28 @@ class SignUpWithEmailScreen extends StatefulWidget {
 
 class _SignUpWithEmailScreenState extends State<SignUpWithEmailScreen> {
 
+  bool isUsernameValidated = true;
+  bool isPasswordValidated = true;
+  bool isEmailValidated = true;
+  
+  void Validate()
+  {
+    setState(() 
+    {
+      isUsernameValidated = ValidationService().validateUsername(nameTextFieldController.text);
+      isEmailValidated = ValidationService().validateEmail(emailTextFieldController.text);
+      isPasswordValidated = ValidationService().validatePassword(passwordTextFieldController.text);
+    });
+  }
+
   @override
   Widget build(BuildContext context) 
   {
     final availableWidth = MediaQuery.of(context).size.width - (padding * 2);
-    final availableHeight = MediaQuery.of(context).size.height - AppBar().preferredSize.height - MediaQuery.of(context).padding.top - MediaQuery.of(context).padding.bottom - backIconSize - MediaQuery.of(context).viewInsets.bottom;
+    final availableHeight = MediaQuery.of(context).size.height - backIconSize - MediaQuery.of(context).viewInsets.bottom;
     
     final logoWidth = availableWidth-150;
     final logoHeight = (availableWidth-150)/4.17;
-
-    final isUsernameError;
-    final isEmailError;
-    final isPasswordError;
 
     return SafeArea
     (
@@ -59,7 +70,7 @@ class _SignUpWithEmailScreenState extends State<SignUpWithEmailScreen> {
                 children: 
                 [
                   buildHeader(logoWidth, logoHeight),
-                  buildBody(availableWidth)
+                  buildBody(availableWidth),
                 ],
               ),
             ),
@@ -93,7 +104,13 @@ class _SignUpWithEmailScreenState extends State<SignUpWithEmailScreen> {
       {
         try
         {
-          context.read<AuthenticationProvider>().registerWithNameEmailAndPassword(nameTextFieldController.text, emailTextFieldController.text, passwordTextFieldController.text);  
+          Validate();
+          print(isUsernameValidated && isEmailValidated && isPasswordValidated);
+          if(isUsernameValidated && isEmailValidated && isPasswordValidated)
+          {
+            print('asd');
+            context.read<AuthenticationProvider>().registerWithNameEmailAndPassword(nameTextFieldController.text, emailTextFieldController.text, passwordTextFieldController.text);  
+          }
         } catch(e) {
           print(e);
         }
@@ -119,6 +136,7 @@ class _SignUpWithEmailScreenState extends State<SignUpWithEmailScreen> {
           title: 'Name', 
           placeHolder: 'John', 
           errorText: 'Your name is not correct!', 
+          isError: !isUsernameValidated,
           controller: nameTextFieldController,
           width: width,
         ),
@@ -127,6 +145,7 @@ class _SignUpWithEmailScreenState extends State<SignUpWithEmailScreen> {
           title: 'Email', 
           placeHolder: 'example@mail.com', 
           errorText: 'This mail is not correct!', 
+          isError: !isEmailValidated,
           controller: emailTextFieldController,
           width: width,
         ),
@@ -135,6 +154,8 @@ class _SignUpWithEmailScreenState extends State<SignUpWithEmailScreen> {
           title: 'Password', 
           placeHolder: 'Password', 
           errorText: 'This password is not correct!', 
+          isError: !isPasswordValidated,
+          obescureText: true,
           controller: passwordTextFieldController,
           width: width,
         ),

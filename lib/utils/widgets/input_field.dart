@@ -45,7 +45,7 @@ class _InputStateField extends State<InputField> {
       ()
       { setState(()
         {
-          if(focusNode.hasFocus){ stateIsError = false; }
+          if(focusNode.hasFocus){ stateIsError = false;}
         });
       }
     );
@@ -71,7 +71,7 @@ class _InputStateField extends State<InputField> {
       children:
       [
         createTitle(),
-        createTextField(),
+        createTextFieldStack(),
         if(stateIsError) ...[createError()]
       ]
     );
@@ -85,7 +85,7 @@ class _InputStateField extends State<InputField> {
       style: TextStyle
       (
         color: getTitleColor(),
-        fontWeight: FontWeight.w400
+        fontWeight: FontWeight.w500
       ),
     );
   }
@@ -96,8 +96,8 @@ class _InputStateField extends State<InputField> {
       return accentColor;
     else if (stateIsError)
       return errorColor;
-
-    return notActiveColor;
+    else
+      return notActiveColor;
   }
 
   Widget createTextFieldStack()
@@ -112,7 +112,7 @@ class _InputStateField extends State<InputField> {
           (
             top: 0,
             bottom: 0,
-            right: 0,
+            right: 10,
             child: createShowEye()
           )
         ]
@@ -131,7 +131,7 @@ class _InputStateField extends State<InputField> {
           stateObsecureText = !stateObsecureText;  
         });
       },
-      child: Icon(CupertinoIcons.eye_fill, color: widget.controller.text.isNotEmpty ? primaryColor : notActiveColor),
+      child: Icon(CupertinoIcons.eye_fill, color: stateObsecureText ? notActiveColor : primaryColor.withOpacity(0.9)),
     );
   }
 
@@ -173,7 +173,7 @@ class _InputStateField extends State<InputField> {
     return Container
     (
       padding: const EdgeInsets.only(top: 2),
-      child: Text(widget.errorText, style: const TextStyle(color: errorColor)),
+      child: Text(widget.errorText, style: const TextStyle(color: errorColor, fontSize: 12)),
     );
   }
 }
