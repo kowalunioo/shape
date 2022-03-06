@@ -1,3 +1,4 @@
+import 'package:enloquenutrition/screens/home_screen.dart';
 import 'package:enloquenutrition/utils/authentication_provider.dart';
 import 'package:enloquenutrition/utils/validation_service.dart';
 import 'package:enloquenutrition/utils/widgets/input_field.dart';
@@ -105,11 +106,10 @@ class _SignUpWithEmailScreenState extends State<SignUpWithEmailScreen> {
         try
         {
           Validate();
-          print(isUsernameValidated && isEmailValidated && isPasswordValidated);
           if(isUsernameValidated && isEmailValidated && isPasswordValidated)
           {
-            print('asd');
             context.read<AuthenticationProvider>().registerWithNameEmailAndPassword(nameTextFieldController.text, emailTextFieldController.text, passwordTextFieldController.text);  
+            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (builder) => const HomeScreen()), (route) => false);
           }
         } catch(e) {
           print(e);

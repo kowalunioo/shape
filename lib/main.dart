@@ -7,9 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
-
-import 'screens/login_screen.dart';
-
+ 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -54,15 +52,12 @@ class Authenticate extends StatelessWidget {
   Widget build(BuildContext context) 
   {
     final user = context.watch<User?>();
-
+    print(user);
     if(user != null) 
     {
-      print(user.email);
       return const HomeScreen();
     }
-    else 
-    {
-      return const WelcomePage();
-    }
+    
+    return const WelcomePage();
   }
 }

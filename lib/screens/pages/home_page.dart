@@ -21,7 +21,7 @@ class _HomePageState extends State<HomePage> {
     (
       children:
       [
-        buildHeader(user!.displayName!),
+        buildHeader(user?.displayName ?? 'User'),
         DatesBar(25),
         ElevatedButton(onPressed: (){context.read<AuthenticationProvider>().signOut();},child: Text('sign out'),)
       ]
