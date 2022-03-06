@@ -125,6 +125,7 @@ class _LoginPageState extends State<LoginPage> {
           placeHolder: 'Password', 
           errorText: 'This password is not correct!', 
           controller: passwordTextFieldController,
+          obescureText: true,
           width: width,
         ),
         Space(10),

@@ -112,7 +112,7 @@ class _InputStateField extends State<InputField> {
           (
             top: 0,
             bottom: 0,
-            right: 10,
+            right: 15,
             child: createShowEye()
           )
         ]

@@ -22,7 +22,7 @@ class _HomePageState extends State<HomePage> {
       children:
       [
         buildHeader(user?.displayName ?? 'User'),
-        DatesBar(25),
+        DatesBar(1),
         ElevatedButton(onPressed: (){context.read<AuthenticationProvider>().signOut();},child: Text('sign out'),)
       ]
     );
@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget buildHeader(String username)
   {
-    return Row //Header
+    return Row
     (
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -56,20 +56,40 @@ class _HomePageState extends State<HomePage> {
     (
       children: 
       [
-        DateBox(),
-        DateBox(),
-        DateBox(),
-        DateBox(),
-        DateBox(),
-        DateBox(),
+        ListView.builder
+        (
+          shrinkWrap: true,
+          itemCount: numberOfDays,
+          itemBuilder: (context, index)
+          {
+            return Column
+            (
+              children: 
+              [
+                DateBox(dayNumber: index),
+              ],
+            );
+          },
+        )
       ]
     );
   }
 }
 
-class DateBox extends StatelessWidget {
-  const DateBox({ Key? key }) : super(key: key);
+class DateBox extends StatefulWidget {
+  final int dayNumber;
 
+  const DateBox
+  ({ 
+    Key? key,
+    required this.dayNumber,
+  }) : super(key: key);
+
+  @override
+  _DateBoxState createState() => _DateBoxState();
+}
+
+class _DateBoxState extends State<DateBox > {
   @override
   Widget build(BuildContext context) {
     return Container
@@ -87,7 +107,7 @@ class DateBox extends StatelessWidget {
         children: 
         [
           Text("Day", style: dateBoxDayTextStyle),
-          Text("1", style: dateBoxNumberTextStyle,),
+          Text(widget.dayNumber.toString(), style: dateBoxNumberTextStyle,),
         ],
       ),
     );

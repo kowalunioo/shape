@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           pageTransitionsTheme: const PageTransitionsTheme(builders: { TargetPlatform.android: CupertinoPageTransitionsBuilder(), TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),})
         ),
-        home: Authenticate(),
+        home: const Authenticate(),
       )
     ); 
   }
@@ -52,12 +52,9 @@ class Authenticate extends StatelessWidget {
   Widget build(BuildContext context) 
   {
     final user = context.watch<User?>();
-    print(user);
     if(user != null) 
-    {
       return const HomeScreen();
-    }
-    
-    return const WelcomePage();
+    else    
+      return const WelcomePage();
   }
 }
