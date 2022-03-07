@@ -1,8 +1,13 @@
+//ignore_for_file: non_constant_identifier_names
+
 import 'package:enloquenutrition/utils/authentication_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:enloquenutrition/utils/utilities.dart';
+import 'package:flutter/rendering.dart';
 import 'package:provider/src/provider.dart';
+
+ScrollController dayBarScrollController = ScrollController();
 
 class HomePage extends StatefulWidget {
   const HomePage({ Key? key }) : super(key: key);
@@ -22,7 +27,7 @@ class _HomePageState extends State<HomePage> {
       children:
       [
         buildHeader(user?.displayName ?? 'User'),
-        DatesBar(1),
+        DatesBar(25),
         ElevatedButton(onPressed: (){context.read<AuthenticationProvider>().signOut();},child: Text('sign out'),)
       ]
     );
@@ -52,25 +57,25 @@ class _HomePageState extends State<HomePage> {
 
   Widget DatesBar(int numberOfDays)
   {
-    return Row
+    return Column
     (
+      mainAxisSize: MainAxisSize.min,
       children: 
       [
-        ListView.builder
+        SizedBox
         (
-          shrinkWrap: true,
-          itemCount: numberOfDays,
-          itemBuilder: (context, index)
-          {
-            return Column
-            (
-              children: 
-              [
-                DateBox(dayNumber: index),
-              ],
-            );
-          },
-        )
+          height: 70,
+          width: double.infinity,
+          child: ListView.builder
+          (
+            shrinkWrap: true,
+            physics: const BouncingScrollPhysics(),
+            scrollDirection: Axis.horizontal,
+            controller: dayBarScrollController,
+            itemCount: numberOfDays,
+            itemBuilder: (context, index) => DateBox(dayNumber: index+1, )
+          ),
+        ),
       ]
     );
   }
@@ -78,11 +83,13 @@ class _HomePageState extends State<HomePage> {
 
 class DateBox extends StatefulWidget {
   final int dayNumber;
+  bool isSelected;
 
-  const DateBox
+  DateBox
   ({ 
     Key? key,
     required this.dayNumber,
+    this.isSelected = false,
   }) : super(key: key);
 
   @override
@@ -92,23 +99,34 @@ class DateBox extends StatefulWidget {
 class _DateBoxState extends State<DateBox > {
   @override
   Widget build(BuildContext context) {
-    return Container
+    return GestureDetector
     (
-      width: 50,
-      height: 70,
-      margin: const EdgeInsets.only(right: 5.0),
-      decoration: BoxDecoration
+      onTap: ()
+      {
+        setState(() 
+        {
+          widget.isSelected = !widget.isSelected;  
+        });
+      },
+      child: Container
       (
-        border: Border.all( color: primaryColor ),
-        borderRadius: BorderRadius.circular(5),
-      ),
-      child: Column
-      (
-        children: 
-        [
-          Text("Day", style: dateBoxDayTextStyle),
-          Text(widget.dayNumber.toString(), style: dateBoxNumberTextStyle,),
-        ],
+        width: 64,
+        margin: const EdgeInsets.only(right: 5.0),
+        decoration: BoxDecoration
+        (
+          color: widget.isSelected ? accentColor : Colors.white.withOpacity(0),
+          borderRadius: BorderRadius.circular(5),
+        ),
+        child: Column
+        (
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: 
+          [
+            const Text("Day", style: dateBoxDayTextStyle),
+            Text(widget.dayNumber.toString(), style: dateBoxNumberTextStyle,),
+          ],
+        ),
       ),
     );
   }
