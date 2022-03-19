@@ -1,3 +1,4 @@
+import 'package:enloquenutrition/main.dart';
 import 'package:enloquenutrition/screens/home_screen.dart';
 import 'package:enloquenutrition/utils/services/authentication_provider.dart';
 import 'package:enloquenutrition/utils/widgets/input_field.dart';
@@ -96,12 +97,12 @@ class _LoginPageState extends State<LoginPage> {
       {
         try
         {
-          User? user = await context.read<AuthenticationProvider>().signInWithEmailAndPassword(emailTextFieldController.text.trim(), passwordTextFieldController.text.trim());
-          if(user != null)
-          {
-            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (builder) => const HomeScreen()), (route) => false);
-          }
-        }catch(e){
+          final auth = Provider.of<AuthenticationProvider>(context, listen: false);
+          await auth.signInWithEmailAndPassword(emailTextFieldController.text, passwordTextFieldController.text).then
+          ((_){
+            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (builder) => const EnloqueNutritionApp()), (route) => false);
+          });
+        } catch(e) {
           if(e.toString().contains("wrong-password"))
           {
             _passwordError = true;

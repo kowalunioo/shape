@@ -47,12 +47,10 @@ class _CalendarPageState extends State<CalendarPage>
             }
             else if(snapshot.hasError)
             {
-              print('error');
               children = [];
             }
             else
             {
-              print('nodata');
               children = <Widget>
               [
                 const CircularProgressIndicator(),

@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:enloquenutrition/screens/home_screen.dart';
 import 'package:enloquenutrition/screens/welcome_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';

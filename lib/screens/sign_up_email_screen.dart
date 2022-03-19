@@ -1,3 +1,4 @@
+import 'package:enloquenutrition/main.dart';
 import 'package:enloquenutrition/screens/home_screen.dart';
 import 'package:enloquenutrition/screens/pages/calendar_page.dart';
 import 'package:enloquenutrition/utils/services/authentication_provider.dart';
@@ -114,7 +115,7 @@ class _SignUpWithEmailScreenState extends State<SignUpWithEmailScreen> {
             await auth.registerWithNameEmailAndPassword(nameTextFieldController.text, emailTextFieldController.text, passwordTextFieldController.text).then
             ((_) 
             {
-              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>const HomeScreen()), (route) => false);
+              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>const EnloqueNutritionApp()), (route) => false);
             });
           }
         } catch(e) {
