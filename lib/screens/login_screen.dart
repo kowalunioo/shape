@@ -1,5 +1,5 @@
 import 'package:enloquenutrition/screens/home_screen.dart';
-import 'package:enloquenutrition/utils/authentication_provider.dart';
+import 'package:enloquenutrition/utils/services/authentication_provider.dart';
 import 'package:enloquenutrition/utils/widgets/input_field.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -9,6 +9,9 @@ import 'package:provider/src/provider.dart';
 
 TextEditingController emailTextFieldController = TextEditingController();
 TextEditingController passwordTextFieldController = TextEditingController();
+bool _passwordError = false;
+bool _emailError = false;
+
 
 class LoginPage extends StatefulWidget {
   const LoginPage({ Key? key }) : super(key: key);
@@ -29,38 +32,42 @@ class _LoginPageState extends State<LoginPage> {
 
     return SafeArea
     (
-      child: Scaffold
-      ( 
-        resizeToAvoidBottomInset: false,
-        body: Container
-        (
-          decoration: const BoxDecoration
+      child: GestureDetector
+      (
+        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+        child: Scaffold
+        ( 
+          resizeToAvoidBottomInset: false,
+          body: Container
           (
-            image: DecorationImage
+            decoration: const BoxDecoration
             (
-              image: AssetImage('assets/images/man-bg-2.jpg'),
-              fit: BoxFit.fitHeight,
-              colorFilter: ColorFilter.mode(Color.fromRGBO(21, 21, 21, 0.1), BlendMode.dstATop)
-            )
-          ),
-          child: Padding
-          (
-            padding: const EdgeInsets.all(padding),
-            child: SizedBox
-            (
-              height: availableHeight,
-              child: Column
+              image: DecorationImage
               (
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: 
-                [
-                  buildHeader(logoWidth, logoHeight),
-                  buildBody(availableWidth),
-                ],
+                image: AssetImage('assets/images/man-bg-2.jpg'),
+                fit: BoxFit.fitHeight,
+                colorFilter: ColorFilter.mode(Color.fromRGBO(21, 21, 21, 0.1), BlendMode.dstATop)
+              )
+            ),
+            child: Padding
+            (
+              padding: const EdgeInsets.all(padding),
+              child: SizedBox
+              (
+                height: availableHeight,
+                child: Column
+                (
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: 
+                  [
+                    buildHeader(logoWidth, logoHeight),
+                    buildBody(availableWidth),
+                  ],
+                ),
               ),
             ),
-          ),
-        )
+          )
+        ),
       )
     );
   }
@@ -89,10 +96,22 @@ class _LoginPageState extends State<LoginPage> {
       {
         try
         {
-          await context.read<AuthenticationProvider>().signInWithEmailAndPassword(emailTextFieldController.text, passwordTextFieldController.text);
-          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (builder) => const HomeScreen()), (route) => false);
+          User? user = await context.read<AuthenticationProvider>().signInWithEmailAndPassword(emailTextFieldController.text.trim(), passwordTextFieldController.text.trim());
+          if(user != null)
+          {
+            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (builder) => const HomeScreen()), (route) => false);
+          }
         }catch(e){
-          print(e);
+          if(e.toString().contains("wrong-password"))
+          {
+            _passwordError = true;
+          }
+          else
+          {
+            _emailError = true;
+            _passwordError = true;
+            print(e.toString());
+          }
         }
       }, 
       icon: const FaIcon(FontAwesomeIcons.signInAlt, color: Colors.white),
@@ -116,6 +135,7 @@ class _LoginPageState extends State<LoginPage> {
           placeHolder: 'example@mail.com', 
           errorText: 'There is no such email singed up in enloque nutrition!', 
           controller: emailTextFieldController,
+          isError: _emailError,
           width: width,
         ),
         Space(10),
@@ -125,6 +145,7 @@ class _LoginPageState extends State<LoginPage> {
           placeHolder: 'Password', 
           errorText: 'This password is not correct!', 
           controller: passwordTextFieldController,
+          isError: _passwordError,
           obescureText: true,
           width: width,
         ),

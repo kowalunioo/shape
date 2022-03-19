@@ -1,4 +1,4 @@
-import 'package:enloquenutrition/screens/pages/home_page.dart';
+import 'package:enloquenutrition/screens/pages/calendar_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,21 +13,19 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
+  User? user;
   int currentIndex = 0;
   
   List pages =
   [
-    const HomePage(),
-    const HomePage(),
-    const HomePage(),
+    const CalendarPage(),
+    const CalendarPage(),
+    const CalendarPage(),
   ];
 
   @override
   Widget build(BuildContext context) 
   {
-    final user = context.watch<User?>();
-
     final availableHeight = MediaQuery.of(context).size.height - AppBar().preferredSize.height - MediaQuery.of(context).padding.top - MediaQuery.of(context).padding.bottom;
     final availableWidth = MediaQuery.of(context).size.width;
 

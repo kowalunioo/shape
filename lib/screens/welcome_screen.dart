@@ -9,14 +9,14 @@ import 'sign_up_email_screen.dart';
 TextEditingController emailTextFieldController = TextEditingController();
 TextEditingController passwordTextFieldController = TextEditingController();
 
-class WelcomePage extends StatefulWidget {
-  const WelcomePage({ Key? key }) : super(key: key);
+class WelcomeScreen extends StatefulWidget {
+  const WelcomeScreen({ Key? key }) : super(key: key);
 
   @override
-  _WelcomePageState createState() => _WelcomePageState();
+  _WelcomeScreenState createState() => _WelcomeScreenState();
 }
 
-class _WelcomePageState extends State<WelcomePage> {
+class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) 
   {

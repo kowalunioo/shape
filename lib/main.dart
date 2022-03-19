@@ -1,7 +1,6 @@
 import 'package:enloquenutrition/screens/home_screen.dart';
-import 'package:enloquenutrition/screens/sign_up_email_screen.dart';
 import 'package:enloquenutrition/screens/welcome_screen.dart';
-import 'package:enloquenutrition/utils/authentication_provider.dart';
+import 'package:enloquenutrition/utils/services/authentication_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -22,13 +21,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MultiProvider
+    return Provider<AuthenticationProvider>
     (
-      providers: 
-      [
-        Provider<AuthenticationProvider>(create: (_) => AuthenticationProvider(FirebaseAuth.instance)),
-        StreamProvider(create: (context) => context.read<AuthenticationProvider>().authState, initialData: null,)
-      ],
+      create: (_) => AuthenticationProvider(FirebaseAuth.instance),
       child: MaterialApp
       (
         title: 'ENLOQUE NUTRITION',
@@ -51,10 +46,22 @@ class Authenticate extends StatelessWidget {
   @override
   Widget build(BuildContext context) 
   {
-    final user = context.watch<User?>();
-    if(user != null) 
-      return const HomeScreen();
-    else    
-      return const WelcomePage();
+    final auth = Provider.of<AuthenticationProvider>(context, listen: false);
+    return StreamBuilder<User?>
+    (
+      stream: auth.authState,
+      builder: (context, snapshot)
+      {
+        if(snapshot.connectionState == ConnectionState.active)
+        {
+          final user = snapshot.data;
+          return user != null ? const HomeScreen() : const WelcomeScreen();
+        }
+        return const Scaffold
+        (
+          body: Center(child: CircularProgressIndicator())
+        );
+      }
+    );
   }
 }

@@ -1,7 +1,9 @@
 import 'package:enloquenutrition/screens/home_screen.dart';
-import 'package:enloquenutrition/utils/authentication_provider.dart';
-import 'package:enloquenutrition/utils/validation_service.dart';
+import 'package:enloquenutrition/screens/pages/calendar_page.dart';
+import 'package:enloquenutrition/utils/services/authentication_provider.dart';
+import 'package:enloquenutrition/utils/services/validation_service.dart';
 import 'package:enloquenutrition/utils/widgets/input_field.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:enloquenutrition/utils/utilities.dart';
@@ -101,17 +103,25 @@ class _SignUpWithEmailScreenState extends State<SignUpWithEmailScreen> {
   Widget buildBody(double width)
   {
     final emailSignUpButton = ElevatedButton.icon(
-      onPressed: () 
+      onPressed: () async
       {
         try
         {
           Validate();
           if(isUsernameValidated && isEmailValidated && isPasswordValidated)
           {
-            context.read<AuthenticationProvider>().registerWithNameEmailAndPassword(nameTextFieldController.text, emailTextFieldController.text, passwordTextFieldController.text);  
-            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (builder) => const HomeScreen()), (route) => false);
+            final auth = Provider.of<AuthenticationProvider>(context, listen: false);
+            await auth.registerWithNameEmailAndPassword(nameTextFieldController.text, emailTextFieldController.text, passwordTextFieldController.text).then
+            ((_) 
+            {
+              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>const HomeScreen()), (route) => false);
+            });
           }
         } catch(e) {
+          if(e.toString().contains("wrong-password"))
+          {
+            isPasswordValidated = false;
+          }
           print(e);
         }
       }, 
