@@ -1,7 +1,6 @@
-import 'package:enloquenutrition/screens/home_screen.dart';
-import 'package:enloquenutrition/screens/welcome_screen.dart';
-import 'package:enloquenutrition/utils/services/authenticate.dart';
+import 'package:enloquenutrition/screens/add_new_exercise_screen.dart';
 import 'package:enloquenutrition/utils/services/authentication_provider.dart';
+import 'package:enloquenutrition/utils/utilities.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -31,11 +30,12 @@ class EnloqueNutritionApp extends StatelessWidget {
         theme: ThemeData
         (
           fontFamily: 'Poppins',
-          scaffoldBackgroundColor: const Color(0xFF151515),
-          primarySwatch: Colors.blue,
+          scaffoldBackgroundColor: backgroundColor,
+          primaryColor: backgroundColor,
           pageTransitionsTheme: const PageTransitionsTheme(builders: { TargetPlatform.android: CupertinoPageTransitionsBuilder(), TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),})
         ),
-        home: const Authenticate(),
+        //home: const Authenticate(),
+        home: const AddNewExerciseScreen(),
       )
     ); 
   }

@@ -1,10 +1,7 @@
 import 'package:enloquenutrition/main.dart';
-import 'package:enloquenutrition/screens/home_screen.dart';
-import 'package:enloquenutrition/screens/pages/calendar_page.dart';
 import 'package:enloquenutrition/utils/services/authentication_provider.dart';
 import 'package:enloquenutrition/utils/services/validation_service.dart';
 import 'package:enloquenutrition/utils/widgets/input_field.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:enloquenutrition/utils/utilities.dart';
@@ -88,7 +85,6 @@ class _SignUpWithEmailScreenState extends State<SignUpWithEmailScreen> {
   {
     return Column
     (
-      //crossAxisAlignment: CrossAxisAlignment.center,
       children: 
       [
         Row
@@ -123,7 +119,6 @@ class _SignUpWithEmailScreenState extends State<SignUpWithEmailScreen> {
           {
             isPasswordValidated = false;
           }
-          print(e);
         }
       }, 
       icon: const FaIcon(FontAwesomeIcons.signInAlt, color: Colors.white),

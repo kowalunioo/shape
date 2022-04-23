@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "925878355057",
+    "firebase_url": "https://enloque-nutrition-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "enloque-nutrition",
     "storage_bucket": "enloque-nutrition.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "925878355057-0i7828ceoe3ucqkmva97o1b906kg02ii.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.enloquenutrition",
+            "certificate_hash": "bac29d9459400a501a6ce90eafbf2f52984adac0"
+          }
+        },
         {
           "client_id": "925878355057-ojehk310t7ru0oe62p2pl1ep014bug5s.apps.googleusercontent.com",
           "client_type": 3

@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-const double _opacityValue = 0.7;
-
 const Color backgroundColor = Color(0xFF151515);
 const Color primaryColor = Color(0xFFFFFFFF);
 const Color accentColor = Color(0xFF7289DA);
@@ -29,7 +27,7 @@ const TextStyle titleRegularTextStyle = TextStyle
 const TextStyle bodyTextStyle = TextStyle
                                  (
                                    color: Colors.white,
-                                   fontSize: 22,
+                                   fontSize: 15,
                                    fontWeight: FontWeight.w400,
                                  );
 
@@ -79,3 +77,4 @@ Widget Logo(double width, double height)
     decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/images/enloquenutrition_logo.png'), fit: BoxFit.contain))
   );
 }
+

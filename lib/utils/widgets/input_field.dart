@@ -147,6 +147,7 @@ class _InputStateField extends State<InputField> {
           controller: widget.controller,
           focusNode: focusNode,
           obscureText: stateObsecureText,
+          keyboardType: widget.keyboardType,
           style: const TextStyle(color: Colors.white),
           decoration: InputDecoration
           (

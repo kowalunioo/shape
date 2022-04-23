@@ -1,10 +1,8 @@
 import 'package:enloquenutrition/main.dart';
-import 'package:enloquenutrition/screens/home_screen.dart';
 import 'package:enloquenutrition/utils/services/authentication_provider.dart';
 import 'package:enloquenutrition/utils/widgets/input_field.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:enloquenutrition/utils/utilities.dart';
 import 'package:provider/src/provider.dart';
 
@@ -92,7 +90,8 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget buildBody(double width)
   {
-    final emailSignInButton = ElevatedButton.icon(
+    final emailSignInButton = ElevatedButton.icon
+    (
       onPressed: () async 
       {
         try
@@ -111,7 +110,6 @@ class _LoginPageState extends State<LoginPage> {
           {
             _emailError = true;
             _passwordError = true;
-            print(e.toString());
           }
         }
       }, 
