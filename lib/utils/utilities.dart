@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -78,3 +80,9 @@ Widget Logo(double width, double height)
   );
 }
 
+String GenerateRandomID(int length)
+{
+  Random random = Random();
+  String generatedID = String.fromCharCodes(List.generate(length, (index) => random.nextInt(33)+89));
+  return generatedID;
+}
