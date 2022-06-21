@@ -29,7 +29,7 @@ class EnloqueNutritionApp extends StatelessWidget {
       create: (_) => AuthenticationProvider(FirebaseAuth.instance),
       child: MaterialApp
       (
-        title: 'ENLOQUE NUTRITION',
+        title: 'SHAPE BY ENLOQUE.',
         theme: ThemeData
         (
           fontFamily: 'Poppins',

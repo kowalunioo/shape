@@ -29,45 +29,48 @@ class _CalendarPageState extends State<CalendarPage>
     User? user = auth.firebaseAuth.currentUser;
     final Future<String?> futureUsername = Future.value(user?.displayName);
 
-    return FutureBuilder
-    (
-      future: futureUsername,
-      builder: (context, AsyncSnapshot<String?> snapshot)
-      {
-        List<Widget> children;
-        if(snapshot.hasData)
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(padding,padding,padding,0),
+      child: FutureBuilder
+      (
+        future: futureUsername,
+        builder: (context, AsyncSnapshot<String?> snapshot)
         {
-          final username = snapshot.data!;
-          children = <Widget>
-          [
-            buildHeader(username),
-            datesBar(25),
-            Workout(id: 1, name: 'Chest', description: 'Pump your chest with some pushups!', exercises: []),
-            ElevatedButton(onPressed: (){auth.signOut();},child: const Text('sign out'))
-          ];
-        }
-        else if(snapshot.hasError)
-        {
-          children = [];
-        }
-        else
-        {
-          children = <Widget>
-          [
-            const CupertinoActivityIndicator(),
-          ];
-        }
-        return SafeArea
-        (
-          child: Scaffold
+          List<Widget> children;
+          if(snapshot.hasData)
+          {
+            final username = snapshot.data!;
+            children = <Widget>
+            [
+              buildHeader(username),
+              datesBar(25),
+              Workout(id: 1, name: 'Chest', description: 'Pump your chest with some pushups!', exercises: []),
+              ElevatedButton(onPressed: (){auth.signOut();},child: const Text('sign out'))
+            ];
+          }
+          else if(snapshot.hasError)
+          {
+            children = [];
+          }
+          else
+          {
+            children = <Widget>
+            [
+              const CupertinoActivityIndicator(),
+            ];
+          }
+          return SafeArea
           (
-            body: Column
+            child: Scaffold
             (
-              children: children,
-            ),
-          )
-        );
-      },
+              body: Column
+              (
+                children: children,
+              ),
+            )
+          );
+        },
+      ),
     );
   }
 

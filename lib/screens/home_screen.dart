@@ -1,3 +1,4 @@
+import 'package:enloquenutrition/screens/pages/account_page.dart';
 import 'package:enloquenutrition/screens/pages/calendar_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
   [
     const CalendarPage(),
     const CalendarPage(),
-    const CalendarPage(),
+    const AccountPage(),
   ];
 
   @override
@@ -50,11 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
             BottomNavigationBarItem(icon: Icon(CupertinoIcons.person_fill), label: "Account"),
           ],
         ),
-        body: Padding
-        (
-          padding: const EdgeInsets.all(padding),
-          child: pages[currentIndex],
-        ),
+        body: pages[currentIndex],
       ), 
     );
   }
