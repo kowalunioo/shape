@@ -22,6 +22,17 @@ class _AccountPageState extends State<AccountPage> {
           elevation: 0,
           backgroundColor: backgroundColor,
         ),
+        body: SingleChildScrollView
+        (
+          padding: const EdgeInsets.symmetric(horizontal: padding),
+          child: Column
+          (
+            children: 
+            [
+              
+            ],
+          ),
+        ),
       ),
     );
   }
